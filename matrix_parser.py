@@ -5,19 +5,31 @@ Parses blocks of text into useful structures
 __author__ = 'heliosantos99@gmail.com (Helio Santos)'
 
 
-def getMatrix(raw, columnSepparator=',', rowSepparator='\n'):
-    rawRows = [x.strip() for x in raw.split(rowSepparator)]
+import tkinter
+
+def getMatrix(raw=None, columnSeparator=',', lineSeparator='\n', numLinesToIgnore=0):
+    if raw is None:
+        raw = get_from_clipboard()
+    rawRows = [x.strip() for x in raw.split(lineSeparator)]
     rows = []
-    for rawRow in rawRows:
-        if not rawRow:
+    for n, rawRow in enumerate(rawRows):
+        if not rawRow or n < numLinesToIgnore:
             continue
-        row = [x.strip() for x in rawRow.split(columnSepparator)]
+        row = [x.strip() for x in rawRow.split(columnSeparator)]
         rows.append(row)
     return rows
 
-def getList(raw, columnIndex=0, columnSepparator=',', rowSepparator='\n'):
-    mtx = getMatrix(raw, columnSepparator, rowSepparator)
+def getList(raw=None, columnIndex=0, columnSeparator=',', lineSeparator='\n', numLinesToIgnore=0):
+    mtx = getMatrix(raw, columnSeparator, lineSeparator, numLinesToIgnore)
     return [x[columnIndex] for x in mtx]
     
-def getSet(raw, columnIndex=0, columnSepparator=',', rowSepparator='\n'):   
-    return set(getList(raw, columnIndex, columnSepparator, rowSepparator))
+def getSet(raw=None, columnIndex=0, columnSeparator=',', lineSeparator='\n', numLinesToIgnore=0): 
+    return set(getList(raw, columnIndex, columnSeparator, lineSeparator, numLinesToIgnore))
+
+def get_from_clipboard():
+    r = tkinter.Tk()
+    text = r.clipboard_get()
+    r.withdraw()
+    r.update()
+    r.destroy()
+    return text
