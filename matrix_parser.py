@@ -4,7 +4,9 @@ parse text into a matrix
 """
 __author__ = 'heliosantos99@gmail.com (Helio Santos)'
 
-from matrix_parser import MatrixParserBase
+#from matrix_parser import MatrixParserBase
+
+from . import MatrixParserBase
 
 class MatrixParser(object):
     """docstring for MatrixParser"""

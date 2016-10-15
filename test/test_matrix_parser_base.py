@@ -6,7 +6,7 @@ __author__ = 'heliosantos99@gmail.com (Helio Santos)'
 
 import unittest
 
-from matrix_parser import MatrixParserBase
+from .. import MatrixParserBase
 
 class MatrixParserBaseTest(unittest.TestCase):
 
