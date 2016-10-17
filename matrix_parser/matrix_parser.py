@@ -57,6 +57,12 @@ class MatrixParser(object):
         for segment in self:
             segment.transform(transformationLambda)
 
+    def to_list(self):
+        return self.rows.to_list()
+
+    def to_set(self):
+        return self.rows.to_set()
+
 
 class MatrixCell(object):
     """docstring for MatrixCell"""
@@ -68,6 +74,13 @@ class MatrixCell(object):
     def transform(self, transformationLambda):
         self.val = transformationLambda(self.val)
 
+    def to_list(self):
+        return self.val
+
+    def to_set(self):
+        if self.val is None:
+            return set()
+        return set([self.val])
 
 class MatrixSegment(list):
     """docstring for MatrixSegment"""
@@ -88,27 +101,11 @@ class MatrixSegment(list):
         for segment in self:
             segment.transform(transformationLambda)
 
+    def to_list(self):
+        return [elem.to_list() for elem in self]
 
-
-if __name__ == '__main__':
-    raw = '''
-    11,12 ,a;b;c,13,14,15
-    21,22,d;e;f,23,24
-    31,32,g;h;i,33,34,35
-    41,42,j;k;l,43,44,45,46,47,48
-    51,52,m;n;o,53,54,55
-    ,,p;q;r,53,54,55
-    '''
-
-    parser = MatrixParser()
-    parser.parse(raw)
-
-    parser.rows[1].transform(lambda x: x + "...")
-    parser.cols[2].transform(lambda x: x.split(';'))
-    for x in parser:
-        for y in x:
-            print(y.val, end=' ')
-        print()
-
-    
-
+    def to_set(self):
+        combinedSet = set()
+        for elem in self:
+            combinedSet.update(elem.to_set())
+        return combinedSet
