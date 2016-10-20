@@ -90,12 +90,7 @@ class MatrixSegment(list):
         self.names = {} if names is None else names
 
     def __getitem__(self, idx):
-        if type(idx) is str:
-            if idx in self.names:
-                idx = self.names[idx]
-            else:
-                raise Exception("Name not found")
-        return self.base.__getitem__(idx)
+        return self.base.__getitem__(self.names.get(idx, idx))
 
     def transform(self, transformationLambda):
         for segment in self:

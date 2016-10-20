@@ -122,7 +122,6 @@ class MatrixParserTest(unittest.TestCase):
         matrix.parse(raw)
 
         combinedSet = matrix.to_set()
-        print(combinedSet)
         self.assertEqual(len(combinedSet), 5)
         self.assertTrue('00' in combinedSet)
         self.assertTrue('11' in combinedSet)

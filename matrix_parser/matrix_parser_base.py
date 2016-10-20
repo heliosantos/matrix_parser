@@ -12,7 +12,7 @@ class MatrixParserBase(object):
         super(MatrixParserBase, self).__init__()
 
     def parse(self, raw, columnSeparator=',', lineSeparator='\n', numLinesToIgnore=0):
-        rawRows = [x.strip() for x in raw.split(lineSeparator)]
+        rawRows = (x.strip() for x in raw.split(lineSeparator))
         matrix = []
         ignoredRows = []
         maxWidth = 0
