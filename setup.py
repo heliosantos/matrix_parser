@@ -11,7 +11,7 @@ with open('LICENSE') as f:
 
 setup(
     name='matrix_parser',
-    version='1.0.1',
+    version='1.0.2',
     description='A matrix shaped text (e.g csv) parser',
     long_description=readme,
     author='Hélio Santos',
@@ -20,4 +20,3 @@ setup(
     license=license,
     packages=find_packages(exclude=('tests', 'docs'))
 )
-

@@ -1,13 +1,7 @@
-#!/usr/bin/python3
-"""
-MatrixParser tests
-"""
-__author__ = 'heliosantos99@gmail.com (Helio Santos)'
-
 import unittest
-
 from .context import matrix_parser
 from matrix_parser import MatrixParser
+
 
 class MatrixParserTest(unittest.TestCase):
 
@@ -27,8 +21,7 @@ class MatrixParserTest(unittest.TestCase):
 
         for i, row in enumerate(matrix):
             for j, val in enumerate(row):
-                self.assertEqual(matrix[i][j].val, '{}{}'.format(i, j))   
-
+                self.assertEqual(matrix[i][j].val, '{}{}'.format(i, j))
 
     def test_columns(self):
         raw = '''
@@ -44,9 +37,8 @@ class MatrixParserTest(unittest.TestCase):
         matrix = MatrixParser()
         matrix.parse(raw)
 
-
         emptyCells = set([
-            '05', '06', '07', '08', 
+            '05', '06', '07', '08',
             '16', '17', '18',
             '25', '26', '27', '28',
             '36', '37', '38',
@@ -58,7 +50,7 @@ class MatrixParserTest(unittest.TestCase):
                 if '{}{}'.format(j, i) in emptyCells:
                     self.assertIsNone(cell.val)
                 else:
-                    self.assertEqual(cell.val, '{}{}'.format(j, i))   
+                    self.assertEqual(cell.val, '{}{}'.format(j, i))
 
     def test_transforms(self):
         raw = '''
@@ -78,8 +70,8 @@ class MatrixParserTest(unittest.TestCase):
 
         for i, row in enumerate(matrix):
             for j, val in enumerate(row):
-                self.assertEqual(matrix[i][j].val, '{}{}'.format(i, j).replace('0', '')) 
-
+                self.assertEqual(
+                    matrix[i][j].val, '{}{}'.format(i, j).replace('0', ''))
 
     def test_to_list(self):
         raw = '''
@@ -96,7 +88,7 @@ class MatrixParserTest(unittest.TestCase):
         matrix.parse(raw)
 
         emptyCells = set([
-            '05', '06', '07', '08', 
+            '05', '06', '07', '08',
             '16', '17', '18',
             '25', '26', '27', '28',
             '36', '37', '38',
@@ -108,8 +100,7 @@ class MatrixParserTest(unittest.TestCase):
                 if '{}{}'.format(j, i) in emptyCells:
                     self.assertIsNone(cell)
                 else:
-                    self.assertEqual(cell, '{}{}'.format(j, i))  
-
+                    self.assertEqual(cell, '{}{}'.format(j, i))
 
     def test_to_set(self):
         raw = '''
@@ -129,3 +120,16 @@ class MatrixParserTest(unittest.TestCase):
         self.assertTrue('23' in combinedSet)
         self.assertTrue('24' in combinedSet)
 
+    def test_blanc_cells(self):
+        raw = '''
+        07/04/2016,DC,'1-2-3,12345678,SP,1.79,,111
+        07/04/2016,,'1-2-3,12345678,APM,20,,222
+        06/04/2016,,'1-2-3,12345678,APM,50,,333
+        06/04/2016,,'1-2-3,12345678,APM,10,,444
+        06/04/2016,DC,'1-2-3,12345678,SP,2.79,,555
+        '''
+
+        matrix = MatrixParser()
+        matrix.parse(raw)
+
+        self.assertEqual(matrix[1][1].val, '')

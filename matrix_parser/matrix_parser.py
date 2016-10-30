@@ -1,28 +1,25 @@
-#!/usr/bin/python3
-"""
-parse text into a matrix
-"""
-__author__ = 'heliosantos99@gmail.com (Helio Santos)'
-
-#from matrix_parser import MatrixParserBase
-
 from . import MatrixParserBase
+
 
 class MatrixParser(object):
     """docstring for MatrixParser"""
+
     def __init__(self):
         super(MatrixParser, self).__init__()
         self.rowNames = {}
         self.colNames = {}
-    
-    def parse(self, raw, columnSeparator=',', lineSeparator='\n', numLinesToIgnore=0):
+
+    def parse(self, raw, columnSeparator=',', lineSeparator='\n',
+              numLinesToIgnore=0):
         matrix = MatrixParserBase()
         matrix.parse(raw, columnSeparator, lineSeparator, numLinesToIgnore)
         self._prepare(matrix)
 
-    def parse_from_clipboard(self, columnSeparator=',', lineSeparator='\n', numLinesToIgnore=0):
+    def parse_from_clipboard(self, columnSeparator=',', lineSeparator='\n',
+                             numLinesToIgnore=0):
         matrix = MatrixParserBase()
-        matrix.parse_from_clipboard(columnSeparator, lineSeparator, numLinesToIgnore)
+        matrix.parse_from_clipboard(
+            columnSeparator, lineSeparator, numLinesToIgnore)
         self._prepare(matrix)
 
     def _prepare(self, matrix):
@@ -37,7 +34,7 @@ class MatrixParser(object):
         for i in range(matrix.maxHeight):
             for j in range(matrix.maxWidth):
                 cell = MatrixCell(matrix[i][j] if j < len(matrix[i]) else None)
-                if cell.val:
+                if cell.val is not None:
                     rows[i].append(cell)
                 cols[j].append(cell)
 
@@ -66,11 +63,12 @@ class MatrixParser(object):
 
 class MatrixCell(object):
     """docstring for MatrixCell"""
+
     def __init__(self, val):
         super(MatrixCell, self).__init__()
         self.original = val
         self.val = val
-    
+
     def transform(self, transformationLambda):
         self.val = transformationLambda(self.val)
 
@@ -82,8 +80,10 @@ class MatrixCell(object):
             return set()
         return set([self.val])
 
+
 class MatrixSegment(list):
     """docstring for MatrixSegment"""
+
     def __init__(self, names=None):
         self.base = super(MatrixSegment, self)
         self.base.__init__()
