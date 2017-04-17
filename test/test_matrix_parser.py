@@ -16,8 +16,7 @@ class MatrixParserTest(unittest.TestCase):
         60,61
         '''
 
-        matrix = MatrixParser()
-        matrix.parse(raw)
+        matrix = MatrixParser(raw)
 
         for i, row in enumerate(matrix):
             for j, val in enumerate(row):
@@ -34,8 +33,7 @@ class MatrixParserTest(unittest.TestCase):
         60,61
         '''
 
-        matrix = MatrixParser()
-        matrix.parse(raw)
+        matrix = MatrixParser(raw)
 
         emptyCells = set([
             '05', '06', '07', '08',
@@ -63,8 +61,7 @@ class MatrixParserTest(unittest.TestCase):
         60,61
         '''
 
-        matrix = MatrixParser()
-        matrix.parse(raw)
+        matrix = MatrixParser(raw)
 
         matrix.transform(lambda x: x.replace('0', ''))
 
@@ -84,8 +81,7 @@ class MatrixParserTest(unittest.TestCase):
         60,61
         '''
 
-        matrix = MatrixParser()
-        matrix.parse(raw)
+        matrix = MatrixParser(raw)
 
         emptyCells = set([
             '05', '06', '07', '08',
@@ -109,8 +105,7 @@ class MatrixParserTest(unittest.TestCase):
         00,00,22,23,24
         '''
 
-        matrix = MatrixParser()
-        matrix.parse(raw)
+        matrix = MatrixParser(raw)
 
         combinedSet = matrix.to_set()
         self.assertEqual(len(combinedSet), 5)
@@ -129,7 +124,6 @@ class MatrixParserTest(unittest.TestCase):
         06/04/2016,DC,'1-2-3,12345678,SP,2.79,,555
         '''
 
-        matrix = MatrixParser()
-        matrix.parse(raw)
+        matrix = MatrixParser(raw)
 
         self.assertEqual(matrix[1][1].val, '')

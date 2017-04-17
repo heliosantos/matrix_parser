@@ -4,15 +4,12 @@ from . import MatrixParserBase
 class MatrixParser(object):
     """docstring for MatrixParser"""
 
-    def __init__(self):
+    def __init__(self, raw, columnSeparator=',', lineSeparator='\n',
+              numLinesToIgnore=0):
         super(MatrixParser, self).__init__()
         self.rowNames = {}
         self.colNames = {}
-
-    def parse(self, raw, columnSeparator=',', lineSeparator='\n',
-              numLinesToIgnore=0):
-        matrix = MatrixParserBase()
-        matrix.parse(raw, columnSeparator, lineSeparator, numLinesToIgnore)
+        matrix = MatrixParserBase(raw, columnSeparator, lineSeparator, numLinesToIgnore)
         self._prepare(matrix)
 
     def parse_from_clipboard(self, columnSeparator=',', lineSeparator='\n',

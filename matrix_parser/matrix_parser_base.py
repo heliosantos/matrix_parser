@@ -4,11 +4,10 @@ import tkinter
 class MatrixParserBase(object):
     """docstring for MatrixParserBase"""
 
-    def __init__(self):
+    def __init__(self, raw, columnSeparator=',', lineSeparator='\n',
+              numLinesToIgnore=0):
         super(MatrixParserBase, self).__init__()
 
-    def parse(self, raw, columnSeparator=',', lineSeparator='\n',
-              numLinesToIgnore=0):
         rawRows = (x.strip() for x in raw.split(lineSeparator))
         matrix = []
         ignoredRows = []
@@ -27,15 +26,6 @@ class MatrixParserBase(object):
         self.maxWidth = maxWidth
         self._matrix = matrix
         self._ignoredRows = ignoredRows
-
-    def parse_from_clipboard(self, columnSeparator=',', lineSeparator='\n',
-                             numLinesToIgnore=0):
-        r = tkinter.Tk()
-        text = r.clipboard_get()
-        r.withdraw()
-        r.update()
-        r.destroy()
-        self.parse(text, columnSeparator, lineSeparator, numLinesToIgnore)
 
     def __getitem__(self, idx):
         return self._matrix[idx]
