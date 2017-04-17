@@ -12,13 +12,6 @@ class MatrixParser(object):
         matrix = MatrixParserBase(raw, columnSeparator, lineSeparator, numLinesToIgnore)
         self._prepare(matrix)
 
-    def parse_from_clipboard(self, columnSeparator=',', lineSeparator='\n',
-                             numLinesToIgnore=0):
-        matrix = MatrixParserBase()
-        matrix.parse_from_clipboard(
-            columnSeparator, lineSeparator, numLinesToIgnore)
-        self._prepare(matrix)
-
     def _prepare(self, matrix):
         rows = MatrixSegment(self.rowNames)
         for i in range(matrix.maxHeight):
